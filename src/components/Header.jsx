@@ -4,7 +4,7 @@ import cart from "../images/cart.png";
 import profile from "../images/profilegreen.png";
 const Header = () => {
   return (
-    <header className="fixed z-50 w-screen bg-gray-300 p-1 px-5">
+    <header className="fixed z-50 w-screen bg-green-50 p-1 px-5">
       {/* Desktop & Tablets */}
       <div className="hidden md:flex w-full h-full p-1 items-center justify-between">
         <div className="flex items-center gap-1">
@@ -34,7 +34,7 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-center w-12 h-12 border-lime-600 border-solid border-10">
+          <div className="flex items-center justify-center w-12 h-12 border-r-zinc-900 border-solid border-10">
             <img src={profile} alt="" className="rounded-full"/>
           </div>
 
