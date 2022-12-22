@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion"; 
 import { Link } from "react-router-dom";
+import { MdAdd, MdLogout} from "react-icons/md";
 
 import logo from "../images/logo.png";
 import cart from "../images/cart.png";
@@ -9,20 +10,38 @@ import profile from "../images/profilegreen.png";
 // Imports for google authentication-----------
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {app} from "../firebase.config"
-
+import { actionType } from "../context/reducer";
+import { useStateValue } from "../context/StateProvider";
+import { useState } from "react";
 
 const Header = () => {
 
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
+
+  const [{user}, dispatch] = useStateValue();
+
+  const [isMenu, setIsMenu] = useState(false);
+
   const login = async () =>{
-    const response = await signInWithPopup(firebaseAuth, provider);
-    console.log(response);
+    if(!user){
+      const {user : {refreshToken, providerData}} = await signInWithPopup(firebaseAuth, provider);
+      // console.log(response);
+      dispatch({
+       type: actionType.SET_USER,
+        user : providerData[0]   
+      })
+
+      localStorage.setItem("user", JSON.stringify(providerData[0]));
+    }else{
+      setIsMenu(!isMenu);
+    }
+
   }
 
   return (
-    <header className="fixed z-50 w-screen bg-green-50 p-1 px-5">
+    <header className="fixed z-50 w-screen bg-green-100 p-1 px-5">
       {/* Desktop & Tablets */}
       <div className="hidden md:flex w-full h-full p-1 items-center justify-between">
         <Link to={'/'} className="flex items-center gap-1">
@@ -54,13 +73,37 @@ const Header = () => {
             </div>
           </motion.div>
 
-          <div className="flex items-center justify-center w-12 h-12 border-r-zinc-900 border-solid border-10 cursor-pointer">
-            <motion.img whileHover={{scale: 1.2}} whileTap={{scale: 0.6}}
-              src={profile} 
+          <div className="relative">
+            <motion.img
+              whileHover={{scale: 1.2}}
+              whileTap={{scale: 0.6}}
+              src={user ? user.photoURL : profile} 
               alt="profile" 
-              className="rounded-full"
+              className="flex items-center justify-center w-12 h-12 border-r-zinc-900 border-solid border-10 cursor-pointer rounded-full"
               onClick={login}
             />
+
+            {
+              isMenu && (
+                
+            <motion.div
+              initial={{opacity: 0, scale: 0.6}}
+              animate={{opacity: 1, scale: 1}}
+              exit={{opacity: 0, scale: 0.6}}
+              className="w-40 bg-green-400 shadow-xl rounded-lg flex flex-col absolute right-0 top-16"
+            >
+            {
+              user && user.email === "jitendrasingh14355@gmail.com" && (
+                <Link to={"/"}>
+                <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover: bg-green-200 transition-all duration-100 ease-in-out text-textColor text-textbase text-base"> New Item <MdAdd/> </p>
+                </Link>
+              )
+            }
+            <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover: bg-green-200 transition-all duration-100 ease-in-out text-textColor text-textbase text-base"> Logout <MdLogout/> </p>
+          </motion.div>
+              )
+            }
+
           </div>
 
         </div>

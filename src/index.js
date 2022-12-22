@@ -6,11 +6,16 @@ import "./App";
 import App from "./App";
 
 import { BrowserRouter as Router } from "react-router-dom";
+import { StateProviders } from "./context/StateProvider";
+import reducer from "./context/reducer";
+import { initialState } from "./context/initialState";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-   <Router>
-    <App />
+  <Router>
+    <StateProviders initialState={initialState} reducer={reducer}>
+      <App />
+    </StateProviders> 
   </Router>
 );
 
