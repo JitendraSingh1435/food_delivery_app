@@ -51,9 +51,9 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed z-50 w-screen bg-green-100 p-0 px-2 md:p-6 md:px-16">
+    <header className="fixed z-50 w-screen bg-green-100 p-0 px-2 md:p-6 md:px-12">
       {/* Desktop & Tablets */}
-      <div className="hidden md:flex w-full h-full p-1 items-center justify-between">
+      <div className="hidden md:flex w-full h-full items-center justify-between">
         <Link to={'/'} className="flex items-center gap-1">
           <div className="flex gap-0">
           <div>
@@ -131,8 +131,13 @@ const Header = () => {
           </div>
 
         </div>
-        
       </div>
+
+
+      
+
+
+      
 
 
       {/* -------------------------------------------------------------------------------------------------------------------------------------------- */}
@@ -142,8 +147,8 @@ const Header = () => {
       <div className="flex items-center justify-between md:hidden w-full h-full p-3 mt-2">
 
         <div className="relative flex items-center justify-center cursor-pointer mt-2">
-            <img src={cart} alt="cartIcon" className="w-7 object-cover"/>
-            <div className="w-5 h-5  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
+            <img src={cart} alt="cartIcon" className="w-5 object-cover"/>
+            <div className="w-4 h-4  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
               <p className="text-xs text-white">2</p>
             </div>
         </div>
@@ -151,11 +156,11 @@ const Header = () => {
         <Link to={'/'} className="flex items-center gap-1">
             <div className="flex gap-0">
               <div>
-                <img src={logo} className="w-10 p-0 object-cover" alt="logo" />
+                <img src={logo} className="w-8 p-0 object-cover" alt="logo" />
               </div>
               <div className=" flex items-center justify-center mt-3">
-                <p className="text-lime-600 text-3xl font-bold"> eat</p>
-                <p className="text-headingColor text-4xl font-bold">.it </p>
+                <p className="text-lime-600 text-2xl font-bold"> eat</p>
+                <p className="text-headingColor text-2xl font-bold">.!t </p>
                 {/* <p className="text-headingColor text-3xl font-bold"> t </p> */}
               </div>
             </div>
@@ -167,7 +172,7 @@ const Header = () => {
               whileTap={{scale: 0.6}}
               src={user ? user.photoURL : profile} 
               alt="profile" 
-              className="flex items-center justify-center w-12 h-12 mt-1 border-r-zinc-900 border-solid border-10 cursor-pointer rounded-full"
+              className="flex items-center justify-center w-9 h-9 mt-1 border-r-zinc-900 border-solid border-10 cursor-pointer rounded-full"
               onClick={login}
             />
 
@@ -199,12 +204,11 @@ const Header = () => {
               )
             }
 
-            <motion.p
-              whileHover={{scale: 1.2}}
-              whileTap={{scale: 0.6}}
-              className="m-2 p-2 rounded-md shadow-md flex items-center justify-center gap-3 bg-green-400 cursor-pointer hover:font-extrabold transition-all duration-100 ease-in-out text-textColor text-textbase text-base font-semibold" onClick = {logout}> Logout <MdLogout/> </motion.p>
-              
-            </motion.div>
+              <motion.p
+                whileHover={{scale: 1.2}}
+                whileTap={{scale: 0.6}}
+                className="m-2 p-2 rounded-md shadow-md flex items-center justify-center gap-3 bg-green-400 cursor-pointer hover:font-extrabold transition-all duration-100 ease-in-out text-textColor text-textbase text-base font-semibold" onClick = {logout}> Logout <MdLogout/> </motion.p>
+              </motion.div>
               )
             }
 
@@ -212,6 +216,10 @@ const Header = () => {
 
 
       </div>
+
+      <hr class="my-1 h-px mt-0 md:mt-4 mx-2 md:mx-0 bg-green-400 border-0 dark:bg-slate-300"/>
+      
+
     </header>
   );
 };
