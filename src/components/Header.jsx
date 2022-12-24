@@ -217,7 +217,7 @@ const Header = () => {
 
       </div>
 
-      <hr class="my-1 h-px mt-0 md:mt-4 mx-2 md:mx-0 bg-green-400 border-0 dark:bg-slate-300"/>
+      <hr className="my-1 h-px mt-0 md:mt-4 mx-2 md:mx-0 bg-green-400 border-0 dark:bg-slate-300"/>
       
 
     </header>
