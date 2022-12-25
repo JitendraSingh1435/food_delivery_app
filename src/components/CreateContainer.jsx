@@ -1,9 +1,167 @@
-import React from 'react'
+import React from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  MdFastfood,
+  MdCloudUpload,
+  MdDelete,
+  MdFoodBank,
+  MdAttachMoney
+} from "react-icons/md";
+import { categories } from "../utils/data";
+import D1 from "../images/d1.png";
+import Loader from "./Loader";
 
 const CreateContainer = () => {
-  return (
-    <div>CreateContainer</div>
-  )
-}
+  const [title, setTitle] = useState("");
+  const [calories, setCalories] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState(null);
+  const [imgAsset, setImgAsset] = useState(null);
+  const [fields, setFields] = useState(false);
+  const [alert, setAlert] = useState("danger");
+  const [msg, setMsg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-export default CreateContainer
+  const uploadImage = () => {};
+
+  const deleteImg = () => {};
+
+  const saveDetails = () => {};
+
+  return (
+    <div className="w-full min-h-screen flex item-center justify-center">
+      <div className="w-[90%] md:w-[75%] border p-16 rounded-xl bg-green-200 flex flex-col items-center justify-center gap-7">
+        {fields && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={`w-full p-2 rounded-lg text-center text-lg font-semibold ${
+              alert === "danger"
+                ? "bg-red-200 text-red-500"
+                : " bg-emerald-200 text-emerald-500"
+            }  `}
+          >
+            {msg}
+          </motion.p>
+        )}
+
+        <div className="w-full py-2 border-b border-green-400 flex items-center gap-2 mt-10">
+          <MdFastfood className="text-xl text-green-700" />
+          <input
+            className="w-full h-full text-sm bg-transparent outline-none border-none text-textColor"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Give a title . . ."
+          />
+        </div>
+
+        <div className="w-full bg-transparent">
+          <select
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full outline-none bg-green-300 rounded-lg cursor cursor-pointer p-2 pl-4"
+          >
+            <option
+              value="other"
+              className="bg-green-300 pr-2 hover:font-semibold"
+            >
+              {" "}
+              Select Category
+            </option>
+            <img src={D1} />
+            {categories &&
+              categories.map((items) => (
+                <option
+                  key={items.id}
+                  value={items.urlParamName}
+                  className="bg-green-300 text-base border-0 outline-none capitalize text-headingColor"
+                >
+                  {items.name}
+                </option>
+              ))}
+          </select>
+        </div>
+
+        <div className="group flex justify-center items-center flex-col border-2 border-dotted border-green-500 w-full h-225 md:h-420 cursor-pointer rounded-lg">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {!imgAsset ? (
+                <>
+                  <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer">
+                    <div className="w-full h-full flex flex-col items-center justify-center">
+                      <MdCloudUpload className="text-green-400 text-3xl hover:text-green-600" />
+                      <p className="text-green-500 text-sm hover:text-green-600">
+                        Click here to upload
+                      </p>
+                    </div>
+                    <input
+                      type="file"
+                      name="uploadimage"
+                      accept="image/*"
+                      onChange={uploadImage}
+                      className="w-0 h-0"
+                    />
+                  </label>
+                </>
+              ) : (
+                <>
+                  <div className="relative h-full">
+                    <img
+                      src={imgAsset}
+                      alt="upload Image"
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      className="absolute bottom-3 right-3 p-3 rounded-full bg-green-300 text-xl cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out"
+                      onClick={deleteImg}
+                    >
+                      <MdDelete className="text-white" />
+                    </button>
+                  </div>
+                </>
+              )}
+            </>
+          )}
+        </div>
+
+        <div className="w-full flex flex-col md:flex-row items-center gap-3">
+          <div className="w-full py-2 border-b border-green-400 flex items-center gap-2">
+            <MdFoodBank className="text-green-700 text-3xl " />
+            <input
+              type="text"
+              required
+              value={calories}
+              onChange={(e)=> setCalories(e.target.value)}
+              placeholder="Calories"
+              className="w-full h-full text-sm bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
+            />
+          </div>
+
+          <div className="w-full py-2 border-b border-green-400 flex items-center gap-2">
+            <MdAttachMoney className="text-green-700 text-3xl " />
+            <input
+              type="text"
+              value={price}
+              onChange={(e)=> setPrice(e.target.value)}
+              placeholder="Price"
+              className="w-full h-full text-sm bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
+            />
+          </div>
+
+          <div className="flex items-center w-full" >
+            <button type="button" className="ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-green-400 px-12 py-2 rounded-lg text-lg text-white font-semibold"
+            onClick={{saveDetails}}> Save </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CreateContainer;

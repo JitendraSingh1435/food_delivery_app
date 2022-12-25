@@ -1,7 +1,7 @@
 import React from 'react'
 import Delivery from "../images/delivery.png";
 import BgImg from "../images/bgImg.png";
-import { setFour } from '../utils/homeData';
+import { setFour } from '../utils/data';
 import D4 from "../images/d4.png"
 
 

@@ -15,3 +15,15 @@ export const setFour = [
     {id: 5, name: "Icecream", desc: "Strawberry Icecream", price: '10.25', imgSrc: I5},
     {id: 6, name: "Red Bull", desc: "Drinks", price: '34.85', imgSrc: D1},
 ]
+
+
+export const categories = [
+    {id: 1, name: "Chicken", urlParamName: "chicken"},
+    {id: 2, name: "Curry", urlParamName: "curry"},
+    {id: 3, name: "Rice", urlParamName: "rice"},
+    {id: 4, name: "Fish", urlParamName: "fish"},
+    {id: 5, name: "Icecream", urlParamName: "icecreams"},
+    {id: 6, name: "Fruits", urlParamName: "fruits"},
+    {id: 7, name: "Soft Drinks", urlParamName: "drinks"},
+]
+
