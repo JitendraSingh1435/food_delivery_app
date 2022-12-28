@@ -5,5 +5,6 @@ import { fetchUser } from "../utils/fetchLocalStorageData"
  
  export const initialState = {
     user: userInfo,
+    foodItems: null
 }
 

@@ -6,11 +6,16 @@ import {
   MdCloudUpload,
   MdDelete,
   MdFoodBank,
-  MdAttachMoney
+  MdAttachMoney,
 } from "react-icons/md";
 import { categories } from "../utils/data";
 import D1 from "../images/d1.png";
 import Loader from "./Loader";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../firebase.config";
+import { getAllFoodItems, saveItems } from "../utils/firebaseFunctions";
+import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
 
 const CreateContainer = () => {
   const [title, setTitle] = useState("");
@@ -22,12 +27,132 @@ const CreateContainer = () => {
   const [alert, setAlert] = useState("danger");
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [{foodItems}, dispatch] = useStateValue();
 
-  const uploadImage = () => {};
 
-  const deleteImg = () => {};
+  const uploadImage = (e) => {
+    setIsLoading(true);
+    const imgFile = e.target.files[0];
+    console.log(imgFile);
 
-  const saveDetails = () => {};
+                        // ref function to interact with firebase storage
+                                  // folder location and file name in firebase storage below -> `Images/${Date.now()} - ${imgFile.name}`
+    const storageRef = ref(storage,`Images/${Date.now()} - ${imgFile.name}`)
+                      //uploadBytesResumable() function to upload the files to firebase cloud.
+    const uploadTask = uploadBytesResumable(storageRef, imgFile);
+
+
+    // on() method attaches one or more event handlers for the selected elements and child elements.
+    // As of jQuery version 1.7, the on() method is the new replacement for the bind(), live() and delegate() methods. 
+    //.on() will give 3 functions -> snapshot : on every single time when image is uploaded
+    //                               error: show error
+    //                               Conplete: everything is fine, get image url
+    uploadTask.on('state_changed', (snapshot) => {
+                              // this done by firebase documentation -> https://firebase.google.com/docs/reference/node/firebase.storage.UploadTask
+      const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    }, 
+      (error) => {
+        console.log(error);
+        setFields(true);
+        setMsg("Error while uploading try Again..");
+        setAlert("danger");
+        setTimeout(() => {
+          setFields(false);
+          setIsLoading(false);
+        }, 1000);
+    },
+     () => {
+      //You can get the download URL for a file by calling the getDownloadURL() method on a Cloud Storage reference.
+      getDownloadURL(uploadTask.snapshot.ref).then(downlaodURL => {
+        setImgAsset(downlaodURL);
+        setIsLoading(false);
+        setFields(true);
+        setMsg("Image uploaded successfully");
+        setAlert("success");
+        setTimeout(() => {
+          setFields(false);
+        }, 1000);
+      })
+     }
+    )
+  };
+
+  const deleteImg = () => {
+    setIsLoading(true);             // imgAsset(image url) through this we can delete image from firebase.
+    const deleteRef = ref(storage, imgAsset);
+    deleteObject(deleteRef).then(() => {
+      setImgAsset(null);
+      setIsLoading(false);
+      setFields(true);  
+      setMsg("Image deleted successfully");
+      setAlert("success");
+      setTimeout(() => {
+        setFields(false);
+      }, 1000)
+    })
+  };
+
+  const saveDetails = () => {
+      setIsLoading(true);
+      try{
+        if(!title || !calories || !imgAsset || !price || !category){
+          setFields(true);
+          setMsg("Required fields can't be empty");
+          setAlert("danger");
+          setTimeout(() =>{
+            setFields(false);
+            setIsLoading(false);
+          }, 1000);
+        }else{
+          const data = {
+            id: `${Date.now()}`,
+            title: title,
+            imageURL: imgAsset,
+            category: category,
+            calories: calories,
+            qty: 1,
+            price: price
+          }
+          saveItems(data);
+          setIsLoading(false);
+          setFields(true);  
+          setMsg("Data uploaded successfully");
+          setAlert("success");
+          clearData();
+          setTimeout(() => {
+            setFields(false);
+          }, 1000)
+        }
+      }catch(error){
+        console.log(error);
+        setFields(true);
+        setMsg("Error while loading: Try Again...");
+        setAlert("danger");
+        setTimeout(() =>{
+          setFields(false);
+          setIsLoading(false);
+        }, 1000);
+      }
+  };
+
+  const clearData = () => {
+    setTitle("");
+    setImgAsset(null);
+    setCalories("");
+    setPrice("");
+    setCategory("Select Category");  
+
+  }
+
+  const fetchData = async () => {
+    await getAllFoodItems().then((data) => {
+      // console.log(data);
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data 
+      })
+    });
+  };
 
   return (
     <div className="w-full min-h-screen flex item-center justify-center">
@@ -59,18 +184,10 @@ const CreateContainer = () => {
         </div>
 
         <div className="w-full bg-transparent">
-          <select
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full outline-none bg-green-300 rounded-lg cursor cursor-pointer p-2 pl-4"
-          >
-            <option
-              value="other"
-              className="bg-green-300 pr-2 hover:font-semibold"
-            >
-              {" "}
+          <select onChange={(e) => setCategory(e.target.value)} className="w-full outline-none bg-green-300 rounded-lg cursor cursor-pointer p-2 pl-4">
+            <option value="other" className="bg-green-300 pr-2 hover:font-semibold">
               Select Category
             </option>
-            <img src={D1} />
             {categories &&
               categories.map((items) => (
                 <option
@@ -136,7 +253,7 @@ const CreateContainer = () => {
               type="text"
               required
               value={calories}
-              onChange={(e)=> setCalories(e.target.value)}
+              onChange={(e) => setCalories(e.target.value)}
               placeholder="Calories"
               className="w-full h-full text-sm bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
             />
@@ -147,17 +264,21 @@ const CreateContainer = () => {
             <input
               type="text"
               value={price}
-              onChange={(e)=> setPrice(e.target.value)}
+              onChange={(e) => setPrice(e.target.value)}
               placeholder="Price"
               className="w-full h-full text-sm bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
             />
           </div>
 
-          <div className="flex items-center w-full" >
-            <button type="button" className="ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-green-400 px-12 py-2 rounded-lg text-lg text-white font-semibold"
-            onClick={{saveDetails}}> Save </button>
+          <div className="flex items-center w-full">
+            <button
+              type="button"
+              className="ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-green-400 px-12 py-2 rounded-lg text-lg text-white font-semibold"
+              onClick={saveDetails}
+            >
+              Save
+            </button>
           </div>
-
         </div>
       </div>
     </div>

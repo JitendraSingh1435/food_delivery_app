@@ -8,7 +8,7 @@ import D4 from "../images/d4.png"
 
 const Home = () => {
   return (
-    <section id='home' className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full h-[calc(100%-88px)]">
+    <section id='home' className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full h-[calc(100%-88px)] mb-800 md:20 lg-20">
       <div className="py-3 flex-1 flex flex-col items-center md:items-start justify-start gap-6">
         <div className="flex items-center gap-2 justify-center bg-green-300 px-2 py-1 rounded-full ">
           <p className="text-base text-green-700 font-semibold my-1 mx-1">

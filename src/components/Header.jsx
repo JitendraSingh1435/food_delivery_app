@@ -208,7 +208,7 @@ const Header = () => {
                 </li>
               </ul>
 
-              <hr class="h-px border-0 dark:bg-gray-400"></hr>
+              <hr className="h-px border-0 dark:bg-gray-400"></hr>
 
               {user && user.email === "jitendrasingh14355@gmail.com" && (
                 <Link to={"/createItem"}>

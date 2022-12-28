@@ -30,7 +30,7 @@ const Loader = () => {
     // </div>
 
 
-    <div class=" w-auto h-auto flex items-center flex-col">
+    <div className=" w-auto h-auto flex items-center flex-col">
         <MdFastfood className="animate-bounce text-green-500 text-[20px] md:text-[30px]"/>
         <p className="text-base text-gray-500 text-[10px] md:text-[14px]"> Loading . . .</p>
     </div>
