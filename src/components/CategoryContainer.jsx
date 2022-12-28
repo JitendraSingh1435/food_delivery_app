@@ -4,9 +4,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { categories } from "../utils/data";
 import RowContainer from "./RowContainer";
+import { useStateValue } from "../context/StateProvider";
+
 
 const CategoryContainer = () => {
   const [filter, setFilter] = useState("chicken");
+
+  const [{foodItems}, dispatch] = useStateValue();
 
   return (
     <section className="w-full bg-green-100 my-16" id="category">
@@ -37,6 +41,10 @@ const CategoryContainer = () => {
                 </p>
               </motion.div>
             ))}
+        </div>
+
+        <div className="w-full">
+            <RowContainer flag={false} data={foodItems?.filter(n => n.category == filter)}/>
         </div>
 
       </div>
