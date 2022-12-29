@@ -18,10 +18,16 @@ const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, cartShow, cartItems}, dispatch] = useStateValue();
 
   const [isMenu, setIsMenu] = useState(false);
 
+  const showCart = () => {
+    dispatch({
+      type: actionType.SET_CART_SHOW,
+      cartShow: !cartShow
+    });
+  }
   const login = async () => {
     if (!user) {
       const {
@@ -99,11 +105,14 @@ const Header = () => {
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.6 }}
             className="relative flex items-center justify-center cursor-pointer"
+            onClick={showCart}
           >
             <img src={cart} alt="cartIcon" className="w-6 object-cover" />
-            <div className="w-4 h-4  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
-              <p className="text-xs text-white">2</p>
+            {cartItems && cartItems.length > 0 && (
+              <div className="w-4 h-4  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
+              <p className="text-xs text-white">{cartItems.length}</p>
             </div>
+            )}
           </motion.div>
 
           <div className="relative">
@@ -149,10 +158,12 @@ const Header = () => {
       {/* mobiles */}
       <div className="flex items-center justify-between md:hidden w-full h-full p-3 mt-2">
         <div className="relative flex items-center justify-center cursor-pointer mt-2">
-          <img src={cart} alt="cartIcon" className="w-5 object-cover" />
-          <div className="w-4 h-4  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
-            <p className="text-xs text-white">2</p>
-          </div>
+          <img src={cart} alt="cartIcon" className="w-5 object-cover" onClick={showCart}/>
+          {cartItems && cartItems.length > 0 && (
+              <div className="w-4 h-4  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
+              <p className="text-xs text-white">{cartItems.length}</p>
+            </div>
+            )}
         </div>
 
         <Link to={"/"} className="flex items-center gap-1">

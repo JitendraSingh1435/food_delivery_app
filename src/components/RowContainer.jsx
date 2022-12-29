@@ -1,18 +1,40 @@
 import React, { useRef } from "react";
-import F1 from "../images/f1.png";
 import { GrAdd } from "react-icons/gr";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import NotFound from '../images/NotFound.svg';
+ import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
+import { useState } from "react";
+import NotFound from "../images/NotFound.svg";
+
 
 const RowContainer = ({ flag, data, scrollValue }) => {
   console.log(data);
 
   const rowContainer = useRef()
 
+  const [items, setItems] = useState([]);
+
+  const [{cartItems, user}, dispatch] = useStateValue();
+
+  const addToCart = () => {
+    //  console.log(item);
+    dispatch({
+      type: actionType.SET_CARTITEMS,
+      cartItems: items,
+    })
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }
+
+  useEffect(() => {
+    addToCart();
+  }, [items])
+
   useEffect(() => {
      rowContainer.current.scrollLeft += scrollValue;
   }, [scrollValue])
+
+  
 
   return (
     <div
@@ -44,6 +66,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
                 <motion.div
                  whileTap={{ scale: 0.5 }}
                   className="flex items-center justify-center p-2 mt-2 rounded-full bg-green-400 w-auto "
+                  onClick={() => setItems([...cartItems, items])}
                 >
                 <GrAdd className="text-base" />
               </motion.div>
