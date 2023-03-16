@@ -65,7 +65,7 @@ const Header = () => {
               <img src={logo} className="w-16 p-1 object-cover" alt="logo" />
             </div>
             <div className=" flex items-center justify-center mt-3">
-              <p className="text-lime-600 text-3xl font-bold"> eat</p>
+              <p className="text-green-600 text-3xl font-bold"> eat</p>
               <p className="text-headingColor text-4xl font-bold">.it </p>
               {/* <p className="text-headingColor text-3xl font-bold"> t </p> */}
             </div>
@@ -79,23 +79,23 @@ const Header = () => {
             exit={{ opacity: 0, x: 200 }}
             className="flex items-center gap-8"
           >
-            <Link to={'/'} className="text-base text-textColor hover:text-lime-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold" 
+            <Link to={'/'} className="text-base text-textColor hover:text-green-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold" 
             onClick={() => {setIsMenu(false)}}>
               Home
             </Link>
-            <li className="text-base text-textColor hover:text-lime-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
+            <li className="text-base text-textColor hover:text-green-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
             onClick={() => {setIsMenu(false)}}>
               Menu
             </li>
-            <li className="text-base text-textColor hover:text-lime-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
+            <li className="text-base text-textColor hover:text-green-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
             onClick={() => {setIsMenu(false)}}>
               About Us
             </li>
-            <li className="text-base text-textColor hover:text-lime-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
+            <li className="text-base text-textColor hover:text-green-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
             onClick={() => {setIsMenu(false)}}>
               Services
             </li>
-            <li className="text-base text-textColor hover:text-lime-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
+            <li className="text-base text-textColor hover:text-green-700 duration-100 transition-all ease-in-out cursor-pointer font-semibold"
             onClick={() => {setIsMenu(false)}}>
               Orders
             </li>
@@ -109,7 +109,7 @@ const Header = () => {
           >
             <img src={cart} alt="cartIcon" className="w-6 object-cover" />
             {cartItems && cartItems.length > 0 && (
-              <div className="w-4 h-4  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
+              <div className="w-4 h-4  rounded-full bg-green-600 flex items-center justify-center absolute -top-2 -right-3">
               <p className="text-xs text-white">{cartItems.length}</p>
             </div>
             )}
@@ -160,7 +160,7 @@ const Header = () => {
         <div className="relative flex items-center justify-center cursor-pointer mt-2">
           <img src={cart} alt="cartIcon" className="w-5 object-cover" onClick={showCart}/>
           {cartItems && cartItems.length > 0 && (
-              <div className="w-4 h-4  rounded-full bg-lime-600 flex items-center justify-center absolute -top-2 -right-3">
+              <div className="w-4 h-4  rounded-full bg-green-600 flex items-center justify-center absolute -top-2 -right-3">
               <p className="text-xs text-white">{cartItems.length}</p>
             </div>
             )}
@@ -172,7 +172,7 @@ const Header = () => {
               <img src={logo} className="w-8 p-0 object-cover" alt="logo" />
             </div>
             <div className=" flex items-center justify-center mt-3">
-              <p className="text-lime-600 text-2xl font-bold"> eat</p>
+              <p className="text-green-600 text-2xl font-bold"> eat</p>
               <p className="text-headingColor text-2xl font-bold">.!t </p>
               {/* <p className="text-headingColor text-3xl font-bold"> t </p> */}
             </div>
@@ -236,7 +236,7 @@ const Header = () => {
                 className="m-2 p-2 rounded-md shadow-md flex items-center justify-center gap-3 bg-green-400 cursor-pointer hover:font-extrabold transition-all duration-100 ease-in-out text-textColor text-textbase text-base font-semibold"
                 onClick={logout}
               >
-                {" "}
+                  
                 Logout <MdLogout />{" "}
               </motion.p>
             </motion.div>

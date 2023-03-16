@@ -43,31 +43,31 @@ const Home = () => {
       <div className="py-2 flex-1 flex items-center relative">
         <img className='ml-auto w-full lg:h-650 lg:w-auto' src={BgImg} alt='bgImage'/>
         
-        <div className='w-full h-full absolute top-0 right-0 lg:right-1 flex flex-wrap flex-row lg:flex-col items-center justify-center px-32 md:mr-32'>
+        <div className='w-full h-full absolute top-0 right-0 lg:right-1 flex flex-wrap flex-row lg:flex-col items-center justify-center px-2 md:mr-3 sm:mr-2'>
           
-          <div className='w-full h-full top-0 left-0 flex flex-wrap items-center justify-center py-16 gap-7 '>
+          <div className='w-full h-full top-0 left-0 flex flex-wrap items-center justify-center py-16 gap-5 '>
             
             {setFour && setFour.map( n => (
 
-              <div key={n.id} className=' lg:w-190 min-w-[190px] p-4 bg-cardOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg'>
+              <div key={n.id} className=' lg:w-190 md:w-150 min-w-[150px] p-4 bg-cardOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg'>
                 
                 <img className='w-20 lg:w-40 -mt-10 lg:-mt-20' src={n.imgSrc} alt='Icecream'/>
-                <p className='text-base lg:text-xl font-semibold text-textColor mt-2'> {n.name} </p>
-                <p className='text-sm text-lighttextGray font-semibold my-1'> {n.desc} </p>
+                <p className='text-base lg:text-xl md:text-sm font-semibold text-textColor mt-2'> {n.name} </p>
+                <p className='text-sm text-lighttextGray md:text-sm font-semibold my-1'> {n.desc} </p>
                 <p className='text-sm font-semibold text-headingColor'><span className='text-lg text-green-600'>$</span> {n.price} </p>
 
               </div>
             ))}
           </div>
 
-          <div className='w-32 lg:w-190 min-w-[190px] h-40 order-last lg:h-485 p-4 md:ml-4 bg-cardOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg'>
+          {/* <div className='w-32 lg:w-190 min-w-[190px] h-40 order-last lg:h-485 p-4 md:ml-4 bg-cardOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg'>
                 
             <img className='w-20 lg:w-40 top-0 -mt-20 lg:-mt-20' src={D4} alt='Icecream'/>
             <p className='text-base lg:text-xl font-semibold text-textColor mt-2'> Cocktail </p>
             <p className='text-sm text-lighttextGray font-semibold my-1'> Sex On The Beach</p>
             <p className='text-sm font-semibold text-headingColor'><span className='text-lg text-green-600'>$</span> 50.00 </p>
     
-          </div>
+          </div> */}
 
               {/* <div className='flex items-center justify-center  '>
                 <div className='w-190 min-w-[190px] h-490 mb-1 p-4 bg-cardOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg'>
